@@ -1,3 +1,5 @@
+> :warning: THIS PROJECT IS A HOMEWORK FOR SOFTWARE MAINTENANCE COURSE! PLEASE DON'T USE IN PRODUCTION OR BETTER ANYWHERE ELSE :sweat_smile:
+
 # python-monobank
 
 ![GitHub-issues](https://img.shields.io/github/issues/vitalik/python-monobank)
