@@ -2,7 +2,7 @@ import monobank
 from datetime import datetime, date, timedelta
 from monobank.utils import to_timestamp
 from monobank.signature import SignKey
-from monobank.transport import api_request
+from monobank.transport import api_request, async_api_request
 
 
 class ClientBase(object):
@@ -35,6 +35,11 @@ class ClientBase(object):
 
     def create_webhook(self, url):
         return self.make_request("POST", "/personal/webhook", json={"webHookUrl": url,})
+
+class AsyncClientMixin:
+    def make_request(self, method, path, **kwargs):
+        headers = self._get_headers(path)
+        return await async_api_request(method, path, headers=headers, **kwargs)
 
 
 class Client(ClientBase):
@@ -91,3 +96,10 @@ def access_request(permissions, private_key, callback_url=None):
     sign_str = headers["X-Time"] + headers["X-Permissions"] + path
     headers["X-Sign"] = key.sign(sign_str)
     return api_request("POST", path, headers=headers)
+
+
+class AsyncClient(AsyncClientMixin, Client):
+    pass
+
+class AsyncCorporateClient(AsyncClientMixin, Client):
+    pass
